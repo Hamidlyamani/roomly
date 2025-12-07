@@ -1,6 +1,8 @@
 import Image from "next/image";
 import LogementCard from "./components/LogementCard";
 import { logementsDemo } from "./db";
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
 
 // Exemple de demo data
 
@@ -10,7 +12,9 @@ import { logementsDemo } from "./db";
 export default function Home() {
   return (
     <>
-      <div className="relative overflow-hidden bg-white container">
+     <Navbar/>
+     <div className="isolate  pt-24">
+      <div className="relative overflow-hidden bg-white container  ">
         <div className="pt-16 pb-80 sm:pt-24 sm:pb-40 lg:pt-40 lg:pb-48">
           <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
             <div className="sm:max-w-lg">
@@ -193,6 +197,8 @@ export default function Home() {
 
 
       </section>
+      </div>
+      <Footer/>
     </>
   )
 }

@@ -15,8 +15,8 @@ import {
 } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
-import LogementCard from '../components/LogementCard'
-import { logementsDemo } from '../db'
+import LogementCard from '../../components/LogementCard'
+import { logementsDemo } from '../../db'
 
 const sortOptions = [
   { name: "Les plus populaires", href: "#", current: true },
