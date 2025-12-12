@@ -14,24 +14,24 @@ export default function LogementCard({ logement }) {
 
         <div className="flex items-center space-x-4 mt-2 text-gray-700">
           <div className="flex items-center space-x-1">
-            <MdHome className="text-blue-500" />
+            <MdHome className="text-prim" />
             <span>{logement.type}</span>
           </div>
           <div className="flex items-center space-x-1">
-            <MdPerson className="text-green-500" />
+            <MdPerson className="text-ter" />
             <span>{logement.capacite} pers.</span>
           </div>
         </div>
 
         <div className="flex items-center justify-between mt-2">
-          <p className="text-blue-600 font-bold text-lg flex items-center">
+          <p className="text-prim font-bold text-base flex items-center">
             <MdAttachMoney className="mr-1" />
             {logement.prix} DH / m
           </p>
           {logement.status === "Disponible" ? (
-            <> <span className="">Disponible</span> <MdCheckCircle className="text-green-500" title="Disponible" /></>
+            <div className="flex justify-end items-center gap-2 "><MdCheckCircle className="text-ter" title="Disponible" /> <span className="">Disponible</span> </div>
           ) : (
-            <> <span className="">Indisponible</span>  <MdCancel className="text-red-500" title="Indisponible" /></>
+            <div className="flex justify-end items-center gap-2 "> <MdCancel className="text-red-500" title="Indisponible" /><span className="">Indisponible</span>  </div>
           )}
         </div>
       </div>

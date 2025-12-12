@@ -66,7 +66,7 @@ export default function CategoriesPage() {
         </div>
 
         {/* Add category */}
-        <button className="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700">
+        <button className="flex items-center justify-center gap-2 rounded-lg bg-prim px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sec">
           <Plus className="h-4 w-4" />
           Ajouter une catégorie
         </button>
@@ -99,7 +99,7 @@ export default function CategoriesPage() {
 
               {/* Actions */}
               <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-                <button className="flex items-center gap-2 text-blue-600 hover:text-blue-700 text-sm">
+                <button className="flex items-center gap-2 text-sec hover:text-prim text-sm">
                   <Edit className="h-4 w-4" />
                   Modifier
                 </button>

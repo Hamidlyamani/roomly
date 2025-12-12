@@ -82,7 +82,7 @@ export default function UsersPage() {
           <input
             type="text"
             placeholder="Rechercher un utilisateur..."
-            className="w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-3 text-sm shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+            className="w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-3 text-sm shadow-sm focus:border-prim focus:ring-2 focus:ring-blue-200"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -90,7 +90,7 @@ export default function UsersPage() {
 
         {/* Filter */}
         <select
-          className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+          className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm focus:border-sec focus:ring-2 focus:ring-blue-200"
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
         >
@@ -101,7 +101,7 @@ export default function UsersPage() {
         </select>
 
         {/* Add user */}
-        <button className="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700">
+        <button className="flex items-center justify-center gap-2 rounded-lg bg-prim px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sec">
           <UserPlus className="h-4 w-4" />
           Ajouter un utilisateur
         </button>

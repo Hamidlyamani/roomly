@@ -1,7 +1,12 @@
 "use client";
+import Image from "next/image";
 import { useState } from "react";
 import { FaRobot, FaUser } from "react-icons/fa";
 
+
+
+
+export const noFooter = true;
 export default function AIRecommandationPage() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -23,18 +28,24 @@ export default function AIRecommandationPage() {
     setInput("");
   };
 
+ 
   return (
     <div className="flex flex-col h-[90%] bg-gray-50">
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-3xl mx-auto px-4 py-10">
-          
-          {/* --- ÉCRAN D'ACCUEIL (avant le 1er message) --- */}
+
           {messages.length === 0 && (
             <div className="flex flex-col items-center text-center mt-20">
-              <div className="w-12 h-12 flex items-center justify-center bg-indigo-600 text-white rounded-2xl text-3xl shadow-lg">
-                <FaRobot />
-              </div>
+              <div className="flex justify-center items-center gap-4"> <Image src="/imgs/logo.png" alt='rommly' width={0}
+                height={0}
+                sizes="100vw"
+                className="w-24 h-auto" />
+                X
+                <div className="w-12 h-12 flex items-center justify-center bg-prim text-white rounded-2xl text-3xl shadow-lg">
 
+                  <FaRobot />
+                </div>
+              </div>
               <h1 className="mt-6 text-3xl font-extrabold text-gray-900">
                 Assistant RoomlyIA Logement
               </h1>
@@ -51,22 +62,20 @@ export default function AIRecommandationPage() {
             {messages.map((msg, i) => (
               <div
                 key={i}
-                className={`flex gap-3 ${
-                  msg.sender === "user" ? "justify-end" : ""
-                }`}
+                className={`flex gap-3 ${msg.sender === "user" ? "justify-end" : ""
+                  }`}
               >
                 {msg.sender === "bot" && (
-                  <div className="w-10 h-10 flex items-center justify-center bg-indigo-600 text-white rounded-full">
+                  <div className="w-10 h-10 flex items-center justify-center bg-sec text-white rounded-full">
                     <FaRobot />
                   </div>
                 )}
 
                 <div
-                  className={`p-3 max-w-[70%] rounded-xl text-sm ${
-                    msg.sender === "user"
-                      ? "bg-indigo-600 text-white"
-                      : "bg-white border"
-                  }`}
+                  className={`p-3 max-w-[70%] rounded-xl text-sm ${msg.sender === "user"
+                    ? "bg-prim text-white"
+                    : "bg-white border"
+                    }`}
                 >
                   {msg.text}
                 </div>
@@ -88,7 +97,7 @@ export default function AIRecommandationPage() {
           <input
             type="text"
             placeholder="Décris le logement que tu veux..."
-            className="flex-1 border rounded-full px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+            className="flex-1 border rounded-full px-4 py-2 text-sm focus:ring-2 focus:ring-sec outline-none"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
@@ -96,7 +105,7 @@ export default function AIRecommandationPage() {
 
           <button
             onClick={sendMessage}
-            className="px-5 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700"
+            className="px-5 py-2 bg-prim text-white rounded-full hover:bg-sec"
           >
             Envoyer
           </button>

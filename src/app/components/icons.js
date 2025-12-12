@@ -4,6 +4,8 @@ import {
   Home,
   Shapes,
   BarChart3,
+  MessageCircle,
+  MessageSquareQuote
 } from "lucide-react";
 
 export const ICONS = {
@@ -12,4 +14,6 @@ export const ICONS = {
   Home,
   Shapes,
   BarChart3,
+  MessageCircle,
+  MessageSquareQuote,
 };

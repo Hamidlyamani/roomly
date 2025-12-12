@@ -85,10 +85,53 @@
 
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+   
+ *{
+  transition-property: all; /* Or a specific property like 'width' or 'background-color' */
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+
+.degrad{
+  @apply 
+    bg-[#e9e2944d]
+    backdrop-blur-[2px]
+    backdrop-saturate-[180%]
+    border
+    border-[rgba(255,255,255,0.4)]
+    rounded-[2rem]
+    shadow-[0_8px_32px_rgba(31,38,135,0.1),_inset_0_4px_20px_rgba(255,255,255,0.1)];
+}
+
+.degrad::after{
+  content: '';
+  @apply
+    absolute
+    top-0 left-0
+    w-full h-full
+    bg-[rgba(255,255,255,0.3)]
+    rounded-[2rem]
+    backdrop-blur-[1px]
+    shadow-[inset_-10px_-8px_0px_-11px_rgba(255,255,255,1),_inset_0px_-9px_0px_-8px_rgba(255,255,255,1)]
+    opacity-60
+    pointer-events-none;
+  
+  filter: blur(1px) drop-shadow(10px 4px 6px black) brightness(115%);
+  z-index: -1;
+}
+.white_filter{
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(3deg) brightness(107%) contrast(107%);
+}
+
+}
+
+
+
+
+
+
+
+
+@layer base {
+
 }

@@ -15,9 +15,10 @@ module.exports = {
   				DEFAULT: 'hsl(var(--primary))',
   				foreground: 'hsl(var(--primary-foreground))'
   			},
-  			sec: 'AE75DA',
-  			ter: 'E9E294',
-  			for: 'FFFCB8',
+			prim:"#9112BC",
+  			sec: '#AE75DA',
+  			ter: '#E9E294',
+  			for: '#FFFCB8',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
@@ -61,7 +62,10 @@ module.exports = {
   				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
   				border: 'hsl(var(--sidebar-border))',
   				ring: 'hsl(var(--sidebar-ring))'
-  			}
+  			},
+			fontFamily: {
+        geistMono: ["'Geist Mono'", "monospace"],
+      },
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

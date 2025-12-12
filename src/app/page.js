@@ -1,6 +1,6 @@
 import Image from "next/image";
 import LogementCard from "./components/LogementCard";
-import { logementsDemo } from "./db";
+import { logementsDemo } from "./(public)/db";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 
@@ -18,7 +18,7 @@ export default function Home() {
         <div className="pt-16 pb-80 sm:pt-24 sm:pb-40 lg:pt-40 lg:pb-48">
           <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
             <div className="sm:max-w-lg">
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+              <h1 className="text-4xl font-bold tracking-tight font-geistMono text-gray-900 sm:text-6xl">
                 Trouve ton espace, crée ta vibe.
               </h1>
               <p className="mt-4 text-xl text-gray-500">
@@ -79,7 +79,7 @@ export default function Home() {
                         <div className="h-64 w-44 overflow-hidden rounded-lg">
                           <img
                             alt=""
-                            src="/imgs/img-5.jpg"
+                            src="/imgs/igirll.png"
                             className="size-full object-cover"
                           />
                         </div>
@@ -95,9 +95,8 @@ export default function Home() {
                   </div>
                 </div>
 
-                <a
-                  href="/logements"
-                  className="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700"
+                <a href="/logements"
+                  className="inline-block rounded-md border border-transparent bg-prim px-8 py-3 text-center font-medium text-white hover:bg-prim"
                 >
                   Trouver mon logement
                 </a>
@@ -110,9 +109,9 @@ export default function Home() {
       <section className=" my-6">
         <div className="text-center py-6 mb-10 space-y-3 bg-[url('/imgs/bgs2.png')] bg-center bg-no-repeat bg-cover">
 
-          <h2 class="text-base/7 font-semibold text-purple-800 ">Trouver plus rapidement</h2>
+          <h2 class="text-base/7 font-semibold text-prim ">Trouver plus rapidement</h2>
           <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-800 sm:text-5xl lg:text-balance">Logements qui matchent ton mood</p>
-          <p class="mt-6 text-lg/8 text-gray-500">Un petit aperçu de ce qui t’attend : des espaces cosy, stylés et prêts à devenir ton nouveau spot.</p>
+          <p class="mt-6 text-lg/8 text-gray-700">Un petit aperçu de ce qui t’attend : des espaces cosy, stylés et prêts à devenir ton nouveau spot.</p>
 
         </div>
 
@@ -123,18 +122,7 @@ export default function Home() {
         </div>
       </section>
       <section>
-
-
-
-
-
-
-
-
-
         <div className="">
-
-
           <div className="relative isolate px-6 pt-14 lg:px-8">
             <div className="absolute bottom-6 right-0 pointer-events-none w-auto text-red-600">
               <img
@@ -154,7 +142,7 @@ export default function Home() {
               <div className="hidden sm:mb-8 sm:flex sm:justify-center">
                 <div className="relative rounded-full px-3 py-1 text-sm/6 text-gray-500 ring-1 ring-white/10 hover:ring-white/20">
                   Recommandation intelligente{' '}
-                  <a href="#" className="font-semibold text-indigo-400">
+                  <a href="#" className="font-semibold text-sec">
                     <span aria-hidden="true" className="absolute inset-0" />
                     Read more <span aria-hidden="true">&rarr;</span>
                   </a>
@@ -171,7 +159,7 @@ export default function Home() {
                 <div className="mt-10 flex items-center justify-center gap-x-6">
                   <a
                     href="#"
-                    className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                    className="rounded-md bg-prim px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-sec focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-prim"
                   >
                     Explorer avec l’IA
                   </a>
@@ -184,18 +172,6 @@ export default function Home() {
 
           </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
       </section>
       </div>
       <Footer/>

@@ -10,13 +10,15 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
+  const noFooter = children?.type?.noFooter === true;
   return (
     <>
         <Navbar/>
         <div className="relative isolate  pt-24 ">
         {children}
       </div>
-       <Footer/>
+      {noFooter && <Footer/>} 
     </>
   );
 }
