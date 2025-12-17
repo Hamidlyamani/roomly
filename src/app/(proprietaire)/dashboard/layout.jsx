@@ -1,7 +1,9 @@
 import DashboardLayout from '../../components/DashboardLayout';
 
 
-export default function dashboardAdmin({ children }) {
+export default async function dashboardProprietaire({ children }) {
+
+
   return (
     <DashboardLayout
       navItems={[
@@ -16,6 +18,7 @@ export default function dashboardAdmin({ children }) {
         activeBg: "bg-prim",
         textColor: "text-sec",
       }}
+      userparams="proprietaire"
     >
       {children}
     </DashboardLayout>

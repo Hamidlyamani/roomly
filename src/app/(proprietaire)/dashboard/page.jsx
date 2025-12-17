@@ -1,6 +1,7 @@
 
 import { TrendingUp, Home, Users, Calendar, ArrowRight } from "lucide-react";
 
+
 const stats = [
   {
     label: "Logements actifs",
@@ -78,11 +79,8 @@ const recentReservations = [
 export default async function DashboardPage() {
 
 
-  const res = await fetch("http://127.0.0.1:8000/auth/me", {
-  credentials: "include",
-});
-console.log(res);
-const user = await res.json();
+
+
 
 
 

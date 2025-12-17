@@ -4,7 +4,7 @@ export default function Login() {
  
   return (
    <>
-   <LoginForm user="proprietaire"/>
+   <LoginForm user="admin"/>
    </>
   );
 }

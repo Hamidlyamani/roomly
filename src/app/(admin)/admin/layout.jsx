@@ -15,6 +15,7 @@ export default function dashboardAdmin({children}) {
       textColor: "text-for",
       hoverBg:"text-for"
    }}
+    userparams="admin"
 >
    {children}
 </DashboardLayout>

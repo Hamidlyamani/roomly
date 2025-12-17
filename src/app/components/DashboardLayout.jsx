@@ -1,18 +1,19 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState, ReactNode } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { ICONS } from "./icons";
-import Image from 'next/image';
 
 
 
 
+export default function DashboardLayout({ children, navItems, theme, userparams }) {
+  const router = useRouter();
 
 
-export default function DashboardLayout({ children, navItems, theme }) {
+
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const colors = {
@@ -23,6 +24,60 @@ export default function DashboardLayout({ children, navItems, theme }) {
     hoverBg: theme?.hoverBg || "bg-sec",
     hoverText: theme?.hoverText || "hover:text-white",
   };
+
+
+
+
+
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadUser() {
+      try {
+        const res = await fetch("http://localhost:8000/auth/me", {
+          method: "GET",
+          credentials: "include", // ⚡ envoie le cookie HttpOnly automatiquement
+        });
+
+        if (!res.ok) {
+          if (res.status === 401) {
+            if (userparams == "proprietaire") {
+              router.push("/login_owner");
+            }
+           else if(userparams == "admin"){
+            router.push("/admin_login");
+           }
+
+            return;
+          } else {
+            console.error("Erreur serveur");
+            return;
+          }
+        }
+
+        const data = await res.json();
+        setUser(data);
+
+        if (data.role !== userparams) {
+          router.replace("/unauthorized");
+          return;
+        }
+      } catch (err) {
+        console.error("Erreur réseau:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadUser();
+  }, []);
+
+  if (loading) return <p>Chargement...</p>;
+
+
+
+
 
 
 
@@ -40,25 +95,25 @@ export default function DashboardLayout({ children, navItems, theme }) {
           {/* Logo */}
           <div className="flex h-16 items-center justify-center px-4 text-2xl font-bold">
             <img src="/imgs/logo.png" alt='rommly' width={0}
-                          height={0}
-                          sizes="100vw"
-                          className="w-20 white_filter h-auto" />
+              height={0}
+              sizes="100vw"
+              className="w-20 white_filter h-auto" />
           </div>
 
           {/* Navigation */}
           <nav className="flex-1 space-y-1 px-3 py-4">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
-             
-             const IconComponent = ICONS[item.icon];
+
+              const IconComponent = ICONS[item.icon];
               return (
                 <Link
                   key={item.name}
                   href={item.href}
                   className={`
                     flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors
-                    ${isActive 
-                      ? `${colors.activeBg} ${colors.activeText}` 
+                    ${isActive
+                      ? `${colors.activeBg} ${colors.activeText}`
                       : `${colors.sidebarText} hover:bg-${colors.hoverBg} ${colors.hoverText}`
                     }
                   `}
@@ -90,7 +145,7 @@ export default function DashboardLayout({ children, navItems, theme }) {
           </h1>
 
           <div className="flex items-center space-x-4">
-            <span className="text-sm text-gray-600">Admin User</span>
+            <span className="text-sm text-gray-600">{user?.nom}</span>
             <img
               className="h-8 w-8 rounded-full"
               src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
