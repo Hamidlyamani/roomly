@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Star,
   MapPin,
@@ -12,6 +12,7 @@ import {
   Phone,
   Heart,
 } from "lucide-react";
+import { useParams, useSearchParams } from "next/navigation";
 
 const mockLogement = {
   id: 1,
@@ -75,19 +76,48 @@ export default function SingleLogementPage() {
     );
   }
 
-  return (
+
+
+const params = useParams();
+  const id = params.id; 
+const [logement, setLogement] = useState([]);
+    const [loading, setLoading] = useState(true);
+  
+    useEffect(() => {
+      const fetchLogement = async () => {
+        try {
+          const res = await fetch("http://localhost:8000/logements/"+id);
+          const data = await res.json();
+          setLogement(data);
+        } catch (err) {
+          console.error("Erreur chargement logements", err);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchLogement();
+    }, []);
+
+return loading? "loading...":
+
+
+
+
+   (
     <div className="max-w-6xl mx-auto p-6">
       {/* Top: title + basic info */}
       <div className="mb-6">
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
             <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
-              {mockLogement.title}
+              {logement.titre}
+              
             </h1>
             <div className="mt-2 flex items-center text-sm text-gray-600 gap-4">
               <div className="flex items-center gap-1">
                 <MapPin className="h-4 w-4 text-red-500" />
-                <span>{mockLogement.city} · {mockLogement.address}</span>
+                <span> {logement.localisation}</span>
               </div>
               <div className="flex items-center gap-1">
                 <Star className="h-4 w-4 text-yellow-400" />
@@ -114,22 +144,22 @@ export default function SingleLogementPage() {
         <div className="lg:col-span-2">
           <div className="rounded-xl overflow-hidden shadow">
             <img
-              src={mockLogement.images[currentImage]}
-              alt={`photo ${currentImage + 1}`}
+              src={logement.images[0].url}
+              alt={`photo ${0 + 1}`}
               className="w-full h-[420px] object-cover"
             />
           </div>
 
           {/* thumbnails */}
           <div className="mt-3 flex gap-3">
-            {mockLogement.images.map((src, i) => (
+            {logement.images.map((img, i) => (
               <button
                 key={i}
                 onClick={() => setCurrentImage(i)}
                 className={`h-20 w-28 rounded-lg overflow-hidden border ${i === currentImage ? "border-blue-500 ring-2 ring-blue-100" : "border-gray-200"}`}
                 aria-label={`Voir image ${i + 1}`}
               >
-                <img src={src} alt={`thumb ${i + 1}`} className="w-full h-full object-cover" />
+                <img src={img.url} alt={`thumb ${i + 1}`} className="w-full h-full object-cover" />
               </button>
             ))}
           </div>
@@ -137,14 +167,14 @@ export default function SingleLogementPage() {
           {/* Description */}
           <div className="mt-6 bg-white p-6 rounded-xl shadow-sm border">
             <h2 className="text-lg font-semibold text-gray-800 mb-2">Description</h2>
-            <p className="text-gray-700 leading-relaxed">{mockLogement.description}</p>
+            <p className="text-gray-700 leading-relaxed">{logement.description}</p>
 
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex items-start gap-3">
                 <Bed className="h-5 w-5 text-gray-600 mt-1" />
                 <div>
                   <p className="font-medium text-gray-800">Capacité</p>
-                  <p className="text-sm text-gray-600">Jusqu'à 4 personnes</p>
+                  <p className="text-sm text-gray-600">{logement.capacite} personnes</p>
                 </div>
               </div>
 
@@ -158,7 +188,7 @@ export default function SingleLogementPage() {
             </div>
 
             {/* Amenités */}
-            <div className="mt-6">
+            {/* <div className="mt-6">
               <h3 className="text-sm font-semibold text-gray-800 mb-2">Équipements</h3>
               <ul className="flex flex-wrap gap-2">
                 {mockLogement.amenities.map((a) => (
@@ -167,7 +197,7 @@ export default function SingleLogementPage() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </div> */}
           </div>
 
           {/* Reviews */}
@@ -204,8 +234,8 @@ export default function SingleLogementPage() {
           <div className="bg-white border rounded-xl p-5 shadow-sm w-full">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm text-gray-500">Prix par nuit</div>
-                <div className="text-2xl font-bold text-gray-900">{mockLogement.pricePerNight} €</div>
+                <div className="text-sm text-gray-500">Prix par un mois</div>
+                <div className="text-2xl font-bold text-gray-900">{logement.prix_mensuel} DH</div>
               </div>
               <div className="text-right">
                 <div className="text-sm text-gray-500">Note</div>
@@ -284,21 +314,7 @@ export default function SingleLogementPage() {
           </div>
 
           {/* Map placeholder */}
-          <div className="mt-4 bg-white border rounded-xl p-4 shadow-sm">
-            <h3 className="text-sm font-semibold text-gray-800 mb-2">Emplacement</h3>
-            <div className="w-full h-48 rounded-md overflow-hidden border">
-              {/* Simple embedded OpenStreetMap iframe or placeholder */}
-              <iframe
-                title="map"
-                src={`https://www.openstreetmap.org/export/embed.html?bbox=0,0,0,0&layer=mapnik`}
-                className="w-full h-full"
-              />
-            </div>
-            <div className="mt-2 text-sm text-gray-500 flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-red-500" />
-              <span>{mockLogement.address}, {mockLogement.city}</span>
-            </div>
-          </div>
+          
         </aside>
       </div>
     </div>

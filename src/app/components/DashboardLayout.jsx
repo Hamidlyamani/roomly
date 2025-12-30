@@ -5,6 +5,9 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { ICONS } from "./icons";
+import LoadingIcon from './loadingIcon';
+import { useUserStore } from '../store/userStore';
+import Userdropdown from './Userdropdown';
 
 
 
@@ -26,59 +29,16 @@ export default function DashboardLayout({ children, navItems, theme, userparams 
   };
 
 
+ const user = useUserStore((state) => state.user);
+ 
+     
+      useEffect(() => {
+    if (user === null) return
 
-
-
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function loadUser() {
-      try {
-        const res = await fetch("http://localhost:8000/auth/me", {
-          method: "GET",
-          credentials: "include", // ⚡ envoie le cookie HttpOnly automatiquement
-        });
-
-        if (!res.ok) {
-          if (res.status === 401) {
-            if (userparams == "proprietaire") {
-              router.push("/login_owner");
-            }
-           else if(userparams == "admin"){
-            router.push("/admin_login");
-           }
-
-            return;
-          } else {
-            console.error("Erreur serveur");
-            return;
-          }
-        }
-
-        const data = await res.json();
-        setUser(data);
-
-        if (data.role !== userparams) {
-          router.replace("/unauthorized");
-          return;
-        }
-      } catch (err) {
-        console.error("Erreur réseau:", err);
-      } finally {
-        setLoading(false);
-      }
+    if (user?.role !== userparams) {
+      router.push('/unauthorized')
     }
-
-    loadUser();
-  }, []);
-
-  if (loading) return <p>Chargement...</p>;
-
-
-
-
-
+  }, [user, userparams, router])
 
 
   return (
@@ -144,14 +104,14 @@ export default function DashboardLayout({ children, navItems, theme, userparams 
             {navItems.find(item => item.href === pathname)?.name || "Dashboard"}
           </h1>
 
-          <div className="flex items-center space-x-4">
-            <span className="text-sm text-gray-600">{user?.nom}</span>
-            <img
-              className="h-8 w-8 rounded-full"
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
-              alt="Avatar"
-            />
-          </div>
+          <Userdropdown
+                       user={{
+                         name: user?.nom,
+                         role: user?.role,
+                         email: user?.email,
+                         navigation: [{ name: "Tableau de bord", href: "/admin" }],
+                       }}
+                     />
         </header>
 
         {/* Page Content */}

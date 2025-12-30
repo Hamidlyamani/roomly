@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Dialog,
   DialogBackdrop,
@@ -16,7 +16,8 @@ import {
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import LogementCard from '../../components/LogementCard'
-import { logementsDemo } from '../db'
+import LoadingIcon from '../../components/LoadingIcon'
+
 
 const sortOptions = [
   { name: "Les plus populaires", href: "#", current: true },
@@ -84,6 +85,9 @@ const filters = [
 }
 ]
 
+
+
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -91,8 +95,32 @@ function classNames(...classes) {
 export default function Logements() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
+
+   const [logements, setLogements] = useState([]);
+    const [loading, setLoading] = useState(true);
+  
+    useEffect(() => {
+      const fetchLogements = async () => {
+        try {
+          const res = await fetch("http://localhost:8000/logements/");
+          const data = await res.json();
+          setLogements(data);
+        } catch (err) {
+          console.error("Erreur chargement logements", err);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchLogements();
+    }, []);
+
   return (
     <div className="bg-white">
+
+
+<LoadingIcon/>
+
       <div>
         {/* Mobile filter dialog */}
         <Dialog open={mobileFiltersOpen} onClose={setMobileFiltersOpen} className="relative z-40 lg:hidden">
@@ -326,7 +354,7 @@ export default function Logements() {
 
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-6">
-                  {logementsDemo.map((lg) => (
+                  {logements.map((lg) => (
                     <LogementCard key={lg.id} logement={lg} />
                   ))}
                 </div>

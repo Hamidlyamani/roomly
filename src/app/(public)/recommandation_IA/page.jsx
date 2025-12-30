@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaRobot, FaUser } from "react-icons/fa";
-
+import { useSearchParams } from "next/navigation";
 
 
 
@@ -11,24 +11,46 @@ export default function AIRecommandationPage() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
 
-  const sendMessage = () => {
-    if (!input.trim()) return;
+  const searchParams = useSearchParams();
+  const query = searchParams.get("query");
+  const hasSentRef = useRef(false);
 
-    const userMsg = { sender: "user", text: input };
-    setMessages((prev) => [...prev, userMsg]);
+
+
+  const sendMessage = (text) => {
+    const messageText = typeof text === "string" ? text : input;
+
+    if (!messageText || !messageText.trim()) return;
+
+    setMessages((prev) => [...prev, { sender: "user", text: messageText }]);
 
     setTimeout(() => {
-      const botMsg = {
-        sender: "bot",
-        text: `Merci ! Je traite ta demande : "${input}". Je te prépare des recommandations 🔎🏠`,
-      };
-      setMessages((prev) => [...prev, botMsg]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: "bot",
+          text: `Merci ! Je traite ta demande : "${messageText}". Je te prépare des recommandations`,
+        },
+      ]);
     }, 700);
 
     setInput("");
   };
 
- 
+
+  // 🔥 Auto-send si query existe
+  useEffect(() => {
+    if (query && !hasSentRef.current) {
+      hasSentRef.current = true; // ✅ bloque le 2e run
+
+      const decoded = decodeURIComponent(query);
+      setInput(decoded);
+      sendMessage(decoded);
+    }
+  }, [query]);
+
+
+
   return (
     <div className="flex flex-col h-[90%] bg-gray-50">
       <div className="flex-1 overflow-y-auto">
@@ -52,7 +74,7 @@ export default function AIRecommandationPage() {
 
               <p className="mt-2 max-w-md text-gray-600">
                 Dis-moi ce que tu cherches : ville, budget, type de logement...
-                Je m’occupe du reste. 🚀
+                Je m’occupe du reste. 
               </p>
             </div>
           )}
@@ -100,7 +122,7 @@ export default function AIRecommandationPage() {
             className="flex-1 border rounded-full px-4 py-2 text-sm focus:ring-2 focus:ring-sec outline-none"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+            onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
           />
 
           <button

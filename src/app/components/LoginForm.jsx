@@ -3,12 +3,17 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useUserStore } from "../store/userStore";
+import { useRouter } from 'next/navigation';
+
 
 export default function LoginForm({user}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+const router = useRouter();
+const setUser = useUserStore.getState().setUser;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,20 +32,34 @@ export default function LoginForm({user}) {
       if (!res.ok) {
         setError(data.message || "Erreur lors de la connexion");
       } else {
-        // login réussi
-        if (user == "proprietaire") {
-          window.location.href = "/dashboard";
-        }
-        else if (user == "admin") {
-          window.location.href = "/admin";
-        }
-        else {
-          window.location.href = "/";
-        }
+
+       // 2 FETCH USER INFO (after cookie is set)
+    const meRes = await fetch("http://localhost:8000/auth/me", {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!meRes.ok) {
+      throw new Error("Impossible de récupérer l'utilisateur");
+    }
+
+    const userData = await meRes.json();
+
+    // 3 SAVE USER IN ZUSTAND
+    setUser(userData);
+
+    // 4 REDIRECT BASED ON ROLE
+    if (userData.role === "proprietaire") {
+     router.push("/dashboard");
+    } else if (userData.role === "admin") {
+      router.push("/admin");
+    } else {
+      router.push("/");
+    }
 
       }
     } catch (err) {
-      setError("Erreur réseau");
+      setError("Erreur réseau: " + err);
     } finally {
       setLoading(false);
     }

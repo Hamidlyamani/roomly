@@ -2,16 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
 
 export default function CreateAccountForm() {
-
+ const router = useRouter();
 
     const searchParams = useSearchParams();
     const roleParam = searchParams.get("role");
-    console.log(roleParam)
 
     const nomRef = useRef();
     const emailRef = useRef();
@@ -21,21 +19,21 @@ export default function CreateAccountForm() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
-
+   
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError("");
         setSuccess("");
 
-const router = useRouter();
+
 
         const payload = {
             nom: nomRef.current.value,
             email: emailRef.current.value,
             telephone: telRef.current.value,
             mot_de_passe: passRef.current.value,
-            role: roleParam || "etudiant", // valeur depuis param ou défaut
+            role: roleParam || "etudiantrrrrrrrrr", // valeur depuis param ou défaut
         };
 
         try {
@@ -46,7 +44,6 @@ const router = useRouter();
             });
 
             const data = await res.json();
-
             if (!res.ok) {
                 setError(data.message || "Erreur lors de la création du compte");
             } else {
@@ -57,15 +54,15 @@ const router = useRouter();
                 telRef.current.value = "";
                 passRef.current.value = "";
             }
-            
+
             if (roleParam == "proprietaire") {
-                router.push("/dashboard");
+                router.push("/login_owner");
             }
             else if (roleParam == "admin") {
-               router.push("/admin");
+                router.push("/login_admin");
             }
             else {
-              router.push("/");
+                router.push("/login_student");
             }
         } catch (err) {
             setError("Erreur réseau");

@@ -8,7 +8,7 @@
   }
 }
 
-
+ 
 
 @layer base {
   :root {
@@ -94,12 +94,13 @@
 
 .degrad{
   @apply 
-    bg-[#e9e2944d]
+    bg-[#ffb0553b]
+    w-8/12
+    
+    rounded-xl
+    mx-auto top-2
     backdrop-blur-[2px]
     backdrop-saturate-[180%]
-    border
-    border-[rgba(255,255,255,0.4)]
-    rounded-[2rem]
     shadow-[0_8px_32px_rgba(31,38,135,0.1),_inset_0_4px_20px_rgba(255,255,255,0.1)];
 }
 
@@ -107,13 +108,12 @@
   content: '';
   @apply
     absolute
-    top-0 left-0
+    top-0 left-0 rounded-xl
     w-full h-full
     bg-[rgba(255,255,255,0.3)]
-    rounded-[2rem]
     backdrop-blur-[1px]
     shadow-[inset_-10px_-8px_0px_-11px_rgba(255,255,255,1),_inset_0px_-9px_0px_-8px_rgba(255,255,255,1)]
-    opacity-60
+    opacity-30
     pointer-events-none;
   
   filter: blur(1px) drop-shadow(10px 4px 6px black) brightness(115%);
@@ -122,6 +122,54 @@
 .white_filter{
   filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(3deg) brightness(107%) contrast(107%);
 }
+
+
+.gradiantButton{
+background: #9112BC;
+background: linear-gradient(45deg, rgba(145, 18, 188, 1) 0%, rgba(174, 117, 218, 1) 38%, rgba(233, 226, 148, 1) 73%, rgba(255, 252, 184, 1) 100%);
+}
+.gradiantButtonHover{
+background: #9112BC;
+background: linear-gradient(180deg, rgba(145, 18, 188, 1) 0%, rgba(174, 117, 218, 1) 38%, rgba(233, 226, 148, 1) 73%, rgba(255, 252, 184, 1) 100%);
+}
+
+
+
+.product-badge {
+   @apply
+relative cursor-pointer 
+
+    before:content-['']
+    before:absolute
+    before:bottom-0
+    before:left-1/2
+    before:-translate-x-1/2
+    before:w-[120%]
+    before:h-full
+    before:-z-10
+    before:bg-[radial-gradient(ellipse_at_bottom,rgba(145,18,188,0.25)_0%,transparent_70%)]
+
+    after:content-['']
+    after:absolute
+    after:bottom-[-2px]
+    after:left-1/2
+    after:-translate-x-1/2
+    after:w-full
+    after:h-[2px]
+    after:bg-[linear-gradient(to_right,transparent,theme(colors.prim)_20%,theme(colors.prim)_80%,transparent)]
+    after:blur-[0.5px]
+}
+
+
+
+
+
+
+
+
+
+
+
 
 }
 

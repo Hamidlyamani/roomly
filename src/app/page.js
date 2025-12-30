@@ -1,4 +1,4 @@
-import Image from "next/image";
+
 import LogementCard from "./components/LogementCard";
 import { logementsDemo } from "./(public)/db";
 import Footer from "./components/Footer";
@@ -9,23 +9,39 @@ import ChatInput from "./components/ChatInput";
 // Exemple de demo data
 
 
+async function getLogements() {
+  const res = await fetch("http://localhost:8000/logements/", {
+    cache: "no-store", // données toujours fraîches
+  });
+
+  if (!res.ok) {
+    throw new Error("Erreur lors du chargement des logements");
+  }
+
+  return res.json();
+}
+
+export default async function Home() {
 
 
-export default function Home() {
+  const logements = await getLogements();
+
+
+  
   return (
     <>
       <Navbar />
-      <div className="isolate  pt-24">
+      <div className="isolate  pt-24 ">
         <section>
-          <div className="relative isolate px-6 pt-14 lg:px-8">
-            <div className="absolute bottom-20 right-0 pointer-events-none w-auto text-red-600">
+          <div className="relative  isolate px-6 pt-14 lg:px-8">
+            <div className="absolute bottom-52 -z-10 right-0 pointer-events-none w-auto ">
               <img
                 alt=""
                 src="/imgs/elemnt2.svg"
                 className="size-full object-cover"
               />
             </div>
-            <div className="absolute top-10 left-0 pointer-events-none -z-10 w-auto text-red-600">
+            <div className="absolute top-10 left-0 pointer-events-none -z-10 w-auto ">
               <img
                 alt=""
                 src="/imgs/elemnt1.svg"
@@ -33,7 +49,7 @@ export default function Home() {
               />
             </div>
             <div className="mx-auto  py-4 sm:py-8 lg:py-8  ">
-              <div className="hidden sm:mb-8 sm:flex sm:justify-center">
+              <div className="hidden sm:mb-2 sm:flex sm:justify-center">
                 <div className="relative rounded-full px-3  text-sm/6 text-gray-500 ring-1 ring-white/10 hover:ring-white/20">
                   Recommandation intelligente{' '}
                   <a href="#" className="font-semibold text-sec">
@@ -43,37 +59,35 @@ export default function Home() {
                 </div>
               </div>
               <div className="text-center  ">
-                <h1 className="text-3xl font-semibold tracking-tight text-balance text-gray-950 sm:text-4xl">
+                <h1 className="text-3xl leading-none font-semibold tracking-tight text-balance text-gray-950 sm:text-4xl">
                   Trouve le logement parfait grâce à notre IA
                 </h1>
-                <p className="mt-8 text-lg font-medium text-pretty text-gray-600 sm:text-xl/8">
+                <p className="mt-2 mb-6 text-lg font-medium text-pretty text-gray-600 sm:text-xl/8">
                   Studios, colocations et appartements qui matchent ton budget et ton lifestyle.
                 </p>
-                <div className="mt-10 flex items-center justify-center gap-x-6">
-
-                </div>
 
 
               </div>
-              <ChatInput/>
+              <ChatInput />
               <Gallery />
             </div>
           </div>
         </section>
 
         <section className=" my-6">
-          <div className="text-center py-6 mb-10 space-y-3 bg-[url('/imgs/bgs2.png')] bg-center bg-no-repeat bg-cover">
+          <div className="text-center py-6 mb-10 space-y-3 bg-center bg-no-repeat bg-cover">
 
-            <h2 class="text-base/7 font-semibold text-prim ">Trouver plus rapidement</h2>
-            <p class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-800 sm:text-5xl lg:text-balance">Logements qui matchent ton mood</p>
-            <p class="mt-6 text-lg/8 text-gray-700">Un petit aperçu de ce qui t’attend : des espaces cosy, stylés et prêts à devenir ton nouveau spot.</p>
+            <h2 className="text-base/7 font-semibold text-prim ">Trouver plus rapidement</h2>
+            <p className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-800 sm:text-5xl lg:text-balance">Logements qui matchent ton mood</p>
+            <p className="mt-6 text-lg/8 text-gray-700">Un petit aperçu de ce qui t’attend : des espaces cosy, stylés et prêts à devenir ton nouveau spot.</p>
 
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-6">
-            {logementsDemo.map((lg) => (
+            {logements.slice(0, 6).map((lg) => (
               <LogementCard key={lg.id} logement={lg} />
             ))}
+
           </div>
         </section>
         <div className="relative overflow-hidden bg-white container  ">
