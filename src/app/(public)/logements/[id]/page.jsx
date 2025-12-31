@@ -79,16 +79,17 @@ export default function SingleLogementPage() {
 
 
 const params = useParams();
-  const id = params.id; 
+ const { id } = useParams();
 const [logement, setLogement] = useState([]);
     const [loading, setLoading] = useState(true);
-  
+  console.log(id)
     useEffect(() => {
       const fetchLogement = async () => {
         try {
-          const res = await fetch("http://localhost:8000/logements/"+id);
+          const res = await fetch(`http://localhost:8000/logements/${id}`);
           const data = await res.json();
           setLogement(data);
+          console.log(data)
         } catch (err) {
           console.error("Erreur chargement logements", err);
         } finally {
@@ -144,7 +145,7 @@ return loading? "loading...":
         <div className="lg:col-span-2">
           <div className="rounded-xl overflow-hidden shadow">
             <img
-              src={logement.images[0].url}
+              src={logement?.images?.[0]?.url}
               alt={`photo ${0 + 1}`}
               className="w-full h-[420px] object-cover"
             />
@@ -152,7 +153,7 @@ return loading? "loading...":
 
           {/* thumbnails */}
           <div className="mt-3 flex gap-3">
-            {logement.images.map((img, i) => (
+            {logement.images?.map((img, i) => (
               <button
                 key={i}
                 onClick={() => setCurrentImage(i)}

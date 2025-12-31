@@ -42,19 +42,19 @@ const user = useUserStore((state) => state.user);
 
   return (
     <div className="rounded-xl shadow-md overflow-hidden border hover:shadow-xl transition relative ">
-<div onClick={addToFavorites} className={`${success?"bg-orange-500 ":"bg-[#ffffffa9]"} " bg-[#ffffffa9] hover:bg-purple-300 rounded-full w-10 h-10 z-10 top-2 right-2 absolute flex items-center justify-center cursor-pointer "`}>
+<div onClick={addToFavorites} className={`${success?"bg-orange-500 ":"bg-[#ffffffa9]"} " bg-[#ffffffa9]  rounded-full w-10 h-10 z-10 top-2 right-2 absolute flex items-center justify-center cursor-pointer "`}>
   <Heart className={`${success?"text-white ":"text-prim"} `} />
 </div>
 
       <Link href={`logements/${logement.id}`} className="block h-56 w-full overflow-hidden">
       <img
-        src={logement.images[0].url}
+        src={logement.images[0]?.url}
         alt={logement.titre}
         className="h-full w-full object-cover transition-transform duration-300 hover:scale-110 hover:rotate-4"
       />
       </Link>
       <div className="p-4 space-y-2">
-       <Link href={`logements/id=${logement.id}`}> <h3 className="text-lg font-semibold">{logement.titre}</h3></Link>
+       <Link href={`logements/${logement.id}`}> <h3 className="text-lg font-semibold">{logement.titre}</h3></Link>
         <div className="flex items-center space-x-4 mt-2 text-gray-700">
           <div className="flex items-center space-x-1">
             <MdHome className="text-prim" />

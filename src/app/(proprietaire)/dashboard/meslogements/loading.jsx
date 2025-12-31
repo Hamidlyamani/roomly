@@ -1,10 +1,8 @@
-"use client"
-
-import LoadingIcon from '@/src/app/components/loadingIcon';
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import LoadingIcon from "../../../components/loadingIcon";
 
 export default function loading() {
     return (
-        <LoadingIcon/>
+         <LoadingIcon/>       
     )
 }
+

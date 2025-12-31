@@ -1,11 +1,7 @@
-"use client"
-
-
+import LoadingIcon from "../../components/loadingIcon";
 
 export default function loading() {
-    return (<>
-        ffffffffffffffffffffffff
-        <LoadingIcon/>
-        </>
+    return (
+         <LoadingIcon/>       
     )
 }

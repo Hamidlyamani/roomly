@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { Search, Plus, Edit, Trash2, Eye } from "lucide-react";
 import AddLogementForm from "@/src/app/components/AddLogementForm";
 import LogementsTable from "@/src/app/components/LogementsTable";
+import HeaderCommpenent from "../../../components/HeaderCommpenent";
 
 
 
@@ -28,7 +29,7 @@ export default function MesLogementsPage() {
   if (view === "form") {
     return (
       <div className="space-y-6">
-        <Header
+        <HeaderCommpenent
           title="Ajouter un logement"
           description="Publie un nouveau logement sur Roomly"
           actionLabel="Retour à la liste"
@@ -41,7 +42,7 @@ export default function MesLogementsPage() {
 
   return (
     <div className="space-y-8">
-      <Header
+      <HeaderCommpenent
         title="Mes logements"
         description="Gérez les logements que vous avez publiés sur Roomly."
         actionLabel="Ajouter un logement"
@@ -60,28 +61,8 @@ export default function MesLogementsPage() {
   );
 }
 
-/* ------------------------------------------------------------------ */
-/* SUB COMPONENTS */
-/* ------------------------------------------------------------------ */
 
-function Header({ title, description, actionLabel, onAction, icon }) {
-  return (
-    <div className="flex items-center justify-between">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-800">{title}</h1>
-        <p className="text-gray-500 mt-1">{description}</p>
-      </div>
 
-      <button
-        onClick={onAction}
-        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-sec text-white text-sm font-medium hover:bg-prim shadow"
-      >
-        {icon}
-        {actionLabel}
-      </button>
-    </div>
-  );
-}
 
 function SearchInput({ value, onChange }) {
   return (

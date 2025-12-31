@@ -27,7 +27,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/app/(etudiant)/favoris/page.jsx"  ],
   "exclude": [
     "node_modules"
   ]
