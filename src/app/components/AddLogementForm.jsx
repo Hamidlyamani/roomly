@@ -17,8 +17,6 @@ export default function AddLogementForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // 1️⃣ Validation : Vérifier si les champs sont vides
     if (
       !titreRef.current.value ||
       !descriptionRef.current.value ||

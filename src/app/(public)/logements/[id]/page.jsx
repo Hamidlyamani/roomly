@@ -4,92 +4,36 @@ import { useEffect, useState } from "react";
 import {
   Star,
   MapPin,
-  Users,
   Bed,
-  Calendar,
   Wifi,
   Coffee,
   Phone,
   Heart,
 } from "lucide-react";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
+import GalleryBookingCard from "../../../components/GalleryBookingcard"
+import FormulaireReservation from "../../../components/FormulaireReservation"
+import LoadingIcon from "../../../components/loadingIcon";
+import ContactOwner from "../../../components/ContactOwner";
 
-const mockLogement = {
-  id: 1,
-  title: "Charmant appartement marocain à proximité de la médina",
-  city: "Marrakech",
-  address: "Rue des Orangers, Médina",
-  pricePerNight: 55, // en €
-  rating: 4.7,
-  reviewsCount: 34,
-  host: {
-    name: "Amina",
-    avatar: "https://randomuser.me/api/portraits/women/68.jpg",
-    since: "2021",
-  },
-  images: [
-    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=80",
-    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1400&q=80",
-    "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1400&q=80",
-    "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=1400&q=80",
-  ],
-  description:
-    "Bel appartement rénové mêlant éléments traditionnels marocains et confort moderne. Situé à 10 minutes à pied de la place Jemaa el-Fna. Cuisine équipée, climatisation, wifi rapide.",
-  amenities: ["Wifi", "Climatisation", "Cuisine", "TV", "Lave-linge", "Petit-déjeuner"],
-  reviews: [
-    {
-      id: 1,
-      author: "Yassine",
-      text: "Séjour excellent, hôte très accueillante. Appartement propre et bien situé.",
-      rating: 5,
-      date: "12 Jan 2025",
-    },
-    {
-      id: 2,
-      author: "Sofia",
-      text: "Très bon rapport qualité/prix. Le seul bémol : rue un peu bruyante le soir.",
-      rating: 4,
-      date: "03 Fév 2025",
-    },
-  ],
-};
+
 
 export default function SingleLogementPage() {
-  const [currentImage, setCurrentImage] = useState(0);
-  const [guests, setGuests] = useState(2);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+ 
   const [faved, setFaved] = useState(false);
 
-  const nights =
-    startDate && endDate ? Math.max(1, (new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24)) : 0;
-  const total = nights ? (nights * mockLogement.pricePerNight).toFixed(2) : null;
-
-  function handleBooking(e) {
-    e.preventDefault();
-    if (!startDate || !endDate) {
-      alert("Veuillez sélectionner les dates de séjour.");
-      return;
-    }
-    alert(
-      `Réservation simulée : ${mockLogement.title}\nDates : ${startDate} → ${endDate}\nNuitées : ${nights}\nInvités : ${guests}\nTotal : ${total}€`
-    );
-  }
 
 
-
-const params = useParams();
  const { id } = useParams();
 const [logement, setLogement] = useState([]);
     const [loading, setLoading] = useState(true);
-  console.log(id)
+ 
     useEffect(() => {
       const fetchLogement = async () => {
         try {
           const res = await fetch(`http://localhost:8000/logements/${id}`);
           const data = await res.json();
           setLogement(data);
-          console.log(data)
         } catch (err) {
           console.error("Erreur chargement logements", err);
         } finally {
@@ -100,7 +44,7 @@ const [logement, setLogement] = useState([]);
       fetchLogement();
     }, []);
 
-return loading? "loading...":
+return loading?   <LoadingIcon/> :
 
 
 
@@ -122,7 +66,6 @@ return loading? "loading...":
               </div>
               <div className="flex items-center gap-1">
                 <Star className="h-4 w-4 text-yellow-400" />
-                <span>{mockLogement.rating} · {mockLogement.reviewsCount} avis</span>
               </div>
             </div>
           </div>
@@ -143,27 +86,7 @@ return loading? "loading...":
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Gallery */}
         <div className="lg:col-span-2">
-          <div className="rounded-xl overflow-hidden shadow">
-            <img
-              src={logement?.images?.[0]?.url}
-              alt={`photo ${0 + 1}`}
-              className="w-full h-[420px] object-cover"
-            />
-          </div>
-
-          {/* thumbnails */}
-          <div className="mt-3 flex gap-3">
-            {logement.images?.map((img, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentImage(i)}
-                className={`h-20 w-28 rounded-lg overflow-hidden border ${i === currentImage ? "border-blue-500 ring-2 ring-blue-100" : "border-gray-200"}`}
-                aria-label={`Voir image ${i + 1}`}
-              >
-                <img src={img.url} alt={`thumb ${i + 1}`} className="w-full h-full object-cover" />
-              </button>
-            ))}
-          </div>
+          <GalleryBookingCard images={logement.images}/>
 
           {/* Description */}
           <div className="mt-6 bg-white p-6 rounded-xl shadow-sm border">
@@ -188,24 +111,13 @@ return loading? "loading...":
               </div>
             </div>
 
-            {/* Amenités */}
-            {/* <div className="mt-6">
-              <h3 className="text-sm font-semibold text-gray-800 mb-2">Équipements</h3>
-              <ul className="flex flex-wrap gap-2">
-                {mockLogement.amenities.map((a) => (
-                  <li key={a} className="text-sm px-3 py-1 rounded-md bg-gray-50 border border-gray-100 text-gray-700">
-                    {a}
-                  </li>
-                ))}
-              </ul>
-            </div> */}
+            
           </div>
 
           {/* Reviews */}
           <div className="mt-6 bg-white p-6 rounded-xl shadow-sm border">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">Avis ({mockLogement.reviews.length})</h2>
             <div className="space-y-4">
-              {mockLogement.reviews.map((r) => (
+              {/* {mockLogement.reviews.map((r) => (
                 <div key={r.id} className="flex gap-4">
                   <div className="h-12 w-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
                     {r.author[0]}
@@ -225,7 +137,7 @@ return loading? "loading...":
                     <p className="text-gray-700 mt-2">{r.text}</p>
                   </div>
                 </div>
-              ))}
+              ))} */}
             </div>
           </div>
         </div>
@@ -238,83 +150,18 @@ return loading? "loading...":
                 <div className="text-sm text-gray-500">Prix par un mois</div>
                 <div className="text-2xl font-bold text-gray-900">{logement.prix_mensuel} DH</div>
               </div>
-              <div className="text-right">
-                <div className="text-sm text-gray-500">Note</div>
-                <div className="flex items-center gap-2">
-                  <Star className="h-5 w-5 text-yellow-400" />
-                  <span className="font-semibold">{mockLogement.rating}</span>
-                </div>
-              </div>
+              
             </div>
 
-            <form className="mt-4 space-y-3" onSubmit={handleBooking}>
-              <div>
-                <label className="text-xs font-medium text-gray-600">Arrivée</label>
-                <input
-                  type="date"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  className="mt-1 w-full rounded-md border px-3 py-2 text-sm focus:ring-2 focus:ring-blue-200"
-                />
-              </div>
+            <FormulaireReservation logementId={logement.id} />
 
-              <div>
-                <label className="text-xs font-medium text-gray-600">Départ</label>
-                <input
-                  type="date"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  className="mt-1 w-full rounded-md border px-3 py-2 text-sm focus:ring-2 focus:ring-blue-200"
-                />
-              </div>
-
-              <div>
-                <label className="text-xs font-medium text-gray-600">Invités</label>
-                <select
-                  value={guests}
-                  onChange={(e) => setGuests(Number(e.target.value))}
-                  className="mt-1 w-full rounded-md border px-3 py-2 text-sm"
-                >
-                  <option value={1}>1 invité</option>
-                  <option value={2}>2 invités</option>
-                  <option value={3}>3 invités</option>
-                  <option value={4}>4 invités</option>
-                </select>
-              </div>
-
-              <div className="pt-2">
-                <button
-                  type="submit"
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-md py-2 font-medium"
-                >
-                  Réserver maintenant
-                </button>
-              </div>
-
-              <div className="text-sm text-gray-600 pt-2">
-                {nights > 0 ? (
-                  <div>
-                    <div>{nights} nuit(s) × {mockLogement.pricePerNight}€ = <strong>{total}€</strong></div>
-                  </div>
-                ) : (
-                  <div>Sélectionnez vos dates pour voir le prix total</div>
-                )}
-              </div>
-            </form>
-
-            <div className="mt-4 border-t pt-4 text-sm text-gray-600 flex flex-col gap-2">
-              <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-gray-500" />
-                <span>Contact hôte : +212 6X XX XX XX</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Coffee className="h-4 w-4 text-gray-500" />
-                <span>Petit-déjeuner disponible</span>
-              </div>
-            </div>
+           <ContactOwner 
+        proprietaireId={logement.proprietaire_id} 
+        logementNom={logement.titre} 
+      />
           </div>
 
-          {/* Map placeholder */}
+          
           
         </aside>
       </div>

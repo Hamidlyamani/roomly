@@ -2,10 +2,11 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { Search } from "lucide-react";
-import { useUserStore } from "../../../store/userStore";
-import LoadingIcon from "../../../components/loadingIcon";
-import SideBarMessages from "../../../components/SideBarMessages";
-import Chatspace from "../../../components/Chatspace";
+import BackToPage from "../../components/BackToPage";
+import Chatspace from "../../components/Chatspace";
+import SideBarMessages from "../../components/SideBarMessages";
+import LoadingIcon from "../../components/loadingIcon";
+import { useUserStore } from "../../store/userStore";
 
 export default function MessagesPage() {
   const [search, setSearch] = useState("");
@@ -58,7 +59,7 @@ export default function MessagesPage() {
       {/* LEFT PANEL: INBOX */}
       <div className="w-80 bg-white border border-gray-200 rounded-xl shadow-sm flex flex-col">
         <div className="flex gap-2 items-center p-2">
-       
+          <BackToPage />
           <div className="p-4 border-b border-gray-200">
             <h2 className="text-xl font-semibold">Mes messages</h2>
           </div>

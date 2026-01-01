@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Search, Plus, Edit, Trash2, Eye } from "lucide-react";
-import AddLogementForm from "@/src/app/components/AddLogementForm";
+import AddLogementForm from "../../../components/AddLogementForm";
 import LogementsTable from "@/src/app/components/LogementsTable";
 import HeaderCommpenent from "../../../components/HeaderCommpenent";
 
@@ -38,6 +38,7 @@ export default function MesLogementsPage() {
         <AddLogementForm />
       </div>
     );
+  
   }
 
   return (

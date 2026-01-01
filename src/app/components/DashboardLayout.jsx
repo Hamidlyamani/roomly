@@ -5,7 +5,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { ICONS } from "./icons";
-import LoadingIcon from './loadingIcon';
 import { useUserStore } from '../store/userStore';
 import Userdropdown from './Userdropdown';
 

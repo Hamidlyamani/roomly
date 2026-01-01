@@ -4,17 +4,20 @@ import Link from "next/link";
 import { useState } from "react";
 import { MdPerson, MdHome, MdAttachMoney, MdCheckCircle, MdCancel, } from "react-icons/md";
 import { useUserStore } from "../store/userStore";
+import LoadingIcon from "./loadingIcon";
 
 export default function LogementCard({ logement,id }) {
 
 
-  const [success, setSuccess] = useState(false)
+const [success, setSuccess] = useState(false)
+const [loading, setLoading] = useState(false)
 const user = useUserStore((state) => state.user);
 
 
 
 
  const addToFavorites = async () => {
+  setLoading(true)
     try {
       const res = await fetch('http://localhost:8000/favoris/', {
         method: 'POST',
@@ -30,6 +33,7 @@ const user = useUserStore((state) => state.user);
 
       if (!res.ok) throw new Error('Failed to add favorite')
       setSuccess(true)
+      setLoading(false)
     } catch (err) {
       console.error(err)
       setSuccess(false)
@@ -38,7 +42,9 @@ const user = useUserStore((state) => state.user);
     }
 }
 
-
+if(loading){
+  LoadingIcon
+}
 
   return (
     <div className="rounded-xl shadow-md overflow-hidden border hover:shadow-xl transition relative ">

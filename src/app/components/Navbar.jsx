@@ -104,7 +104,7 @@ export default function Navbar() {
                 name: user.nom,
                 role: user.role,
                 email: user.email,
-                navigation: [{ name: "Conversions", href: "conversions" },{ name: "Favorises", href: "favorises" }],
+                navigation: [{ name: "Conversions", href: "/messages" },{ name: "Favorises", href: "favoris" }],
               }}
             />
           ): <LoginDropdown />
